@@ -2,6 +2,7 @@ from typing import Tuple, Optional, Sequence
 from abc import ABCMeta, abstractmethod
 
 import numpy as np
+import skimage
 
 from em_utils import EM
 
@@ -203,3 +204,89 @@ class RandomCrop:
             full_slice = full_slice[1:]  # Remove C axis from slice because target doesn't have it
         target_cropped = target[full_slice]
         return inp_cropped, target_cropped
+
+
+class RandomRotate2d:
+    """
+    Adapted from elektronn3:
+    https://github.com/ELEKTRONN/elektronn3/blob/56ad4e806dcafb826180c22
+    1ebc82f298d968f0c/elektronn3/data/transforms/transforms.py#L711
+
+    MIT License
+
+    Copyright (c) 2017 - now, ELEKTRONN team
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+    Random rotations in the xy plane, based on scikit-image.
+
+    If inputs are 3D images ([C,] D, H, W) Rotate them as a stack of 2D images
+    by the same angle, constraining the rotation direction to the xy plane"""
+    def __init__(self, angle_range=(-180, 180), prob=1):
+        self.angle_range = angle_range
+        self.prob = prob
+
+    def __call__(self, inp, target):
+        assert inp.ndim in (3, 4)
+        if np.random.rand() > self.prob:
+            return inp, target
+        angle = np.random.uniform(*self.angle_range)
+        rot_opts = {'angle': angle, 'preserve_range': True, 'mode': 'reflect'}
+
+        if target is not None:
+            if target.ndim == inp.ndim - 1:  # Implicit (no) channel dimension
+                target_c = False
+            elif target.ndim == inp.ndim:  # Explicit channel dimension
+                target_c = True
+            else:
+                raise ValueError('Target dimension not understood.')
+
+        def rot(inp, target):
+            """Rotate in 2D space"""
+            for c in range(inp.shape[0]):
+                inp[c] = skimage.transform.rotate(inp[c], **rot_opts).astype(inp.dtype)[None]
+            if target is None:
+                return inp, target  # Return early if target shouldn't be transformed
+            # Otherwise, transform target:
+            if target_c:
+                for c in range(target.shape[0]):
+                    target[c] = skimage.transform.rotate(target[c], **rot_opts).astype(target.dtype)
+            else:
+                target = skimage.transform.rotate(target, **rot_opts).astype(target.dtype)
+            return inp, target
+
+        if inp.ndim == 3:  # 2D case
+            if angle != 0:
+                rinp, rtarget = rot(inp, target)
+            else:
+                rinp, rtarget = inp, target
+        else:  # 3D case: Rotate each z slice separately by the same angle
+            rinp = inp.copy()
+            if target is not None:
+                rtarget = target.copy()
+                for z in range(rinp.shape[1]):
+                    if target_c:
+                        rinp[:, z], rtarget[:, z] = rot(inp[:, z], target[:, z])
+                    else:
+                        rinp[:, z], rtarget[z] = rot(inp[:, z], target[z])
+            else:
+                for z in range(rinp.shape[1]):
+                    rinp[:, z], _ = rot(inp[:, z], None)
+                rtarget = None
+        return (rinp, angle / 180 * np.pi), rtarget
