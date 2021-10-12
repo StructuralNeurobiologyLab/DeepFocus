@@ -13,7 +13,7 @@ from .nelder_mead import nelder_mead
 
 
 class DeepFocusScore(AutoFocusBase):
-    def __init__(self, mpath: str, n_consensus: int = 5, deterministic_consensus: bool = True, device: str = 'cpu',
+    def __init__(self, mpath: str, n_consensus: int = 5, deterministic_consensus: bool = True, device: str = 'cuda',
                  crop_edge_length: int = 256, normalization: Tuple[float, float] = (128., 128.),
                  pixel_size: float = 10.03, dwell_time: float = 0.1, model_pixel_size: float = 10.03,
                  frame_settings: int = 0, nelder_mead_kwargs: Optional[dict] = None):

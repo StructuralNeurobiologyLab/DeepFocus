@@ -29,7 +29,7 @@ class AutoFocusBase(metaclass=ABCMeta):
         self.pred_details = dict()
 
     @abstractmethod
-    def run_on_em(self,  em: EM, apply_result: bool = True,
+    def run_on_em(self, em: EM, apply_result: bool = True,
                   refresh_after_apply: bool = True) -> Tuple[np.ndarray, np.ndarray]:
         """
 
