@@ -8,8 +8,8 @@ import numpy as np
 import scipy.ndimage
 import torch
 
-from em_utils import EM
-from af_utils import AutoFocusBase, RandomCrop
+from .em_utils import EM
+from .af_utils import AutoFocusBase, RandomCrop
 
 
 class DeepFocus(AutoFocusBase):

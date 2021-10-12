@@ -7,9 +7,9 @@ import numpy as np
 import scipy.ndimage
 import torch
 
-from em_utils import EM
-from af_utils import AutoFocusBase, RandomCrop
-from nelder_mead import nelder_mead
+from .em_utils import EM
+from .af_utils import AutoFocusBase, RandomCrop
+from .nelder_mead import nelder_mead
 
 
 class DeepFocusScore(AutoFocusBase):

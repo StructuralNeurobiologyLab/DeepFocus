@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 import numpy as np
 import skimage
 
-from em_utils import EM
+from .em_utils import EM
 
 
 class AutoFocusBase(metaclass=ABCMeta):
