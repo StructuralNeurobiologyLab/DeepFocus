@@ -163,7 +163,10 @@ class DeepFocus(AutoFocusBase):
                     em.set_wd(wd + sign * defocus)  # perturbations conversion from nm to m
                     # acquire defocused image
                     fname = f'{temp_dir}\\def{int(sign * defocus * 1e9)}.png'
-                    em.acquire_frame(save_path_filename=fname, delay=0.25)
+                    try:
+                        em.acquire_frame(save_path_filename=fname, delay=0.25)
+                    except TypeError:
+                        em.acquire_frame(save_path_filename=fname, extra_delay=0.25)
                     # let's not care about sub-nanometer res.
                     if np.round(self.pixel_size, decimals=0) == np.round(self._model_pixel_size, decimals=0):
                         images.append(imageio.imread(fname))
