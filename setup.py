@@ -1,22 +1,23 @@
-from setuptools import find_packages, setup
+from setuptools import setup
 
 setup(
-    name='DeepFocus',
+    name='deepfocus',
     version='1.0',
-    description='Deep learning based focus and stigmation correction.',
+    description='Deep learning based focus and astigmatism correction for electron microscopy.',
     url='',
     download_url='',
     author='Philipp Schubert et al.',
-    author_email='pschubert@neuro.mpg.de',
+    author_email='philipp.schubert@bi.mpg.de',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',
         'Topic :: Connectomics :: Analysis Tools',
-        'License :: OSI Approved :: '  # GNU General Public License v2 (GPLv2)',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.10',
+        'License :: OSI Approved :: MIT License'
     ],
     platforms=["Linux", "Windows"],
     keywords='electronmicroscopy autofocus autostigmation',
-    packages=find_packages(),
+    packages=['deepfocus'],
     python_requires='>=3.7, <4',
 )
