@@ -53,7 +53,10 @@ class DeepFocus(AutoFocusBase):
         self.device = device
         self.normalization = normalization
         start = time.time()
-        self.model = torch.jit.load(mpath, map_location=device)
+        if mpath.endswith('.pts'):
+            self.model = torch.jit.load(mpath, map_location=device)
+        else:
+            self.model = torch.load(mpath, map_location=device)
         self.model.eval()
         if hasattr(self.model, 'n_consensus'):
             self.model.n_consensus = n_consensus
@@ -74,6 +77,7 @@ class DeepFocus(AutoFocusBase):
                 f'deterministic_consensus={self.deterministic_consensus}, independent_xy={self.independent_xy}, '
                 f'frame_settings={self.frame_settings}, use_fix_locations={self.use_fix_locations}\n')
 
+    @torch.no_grad()
     def apply(self, imgs: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """
         Apply deep focus model on input images `imgs`.

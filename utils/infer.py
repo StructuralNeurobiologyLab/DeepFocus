@@ -2,14 +2,19 @@ import os
 
 import imageio
 import numpy as np
+import torch
 
 from deepfocus import DeepFocus
 
+_DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
 if __name__ == '__main__':
+    print(f'Using torch device `{_DEVICE}`.')
     data_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
     model_path = os.path.join(data_dir, 'StackedConv2D__21-07-27_16-21-40_normal_512.pts')
     model = DeepFocus(model_path, perturbation_list=[5e-6], normalization=(128., 128.), use_fix_locations=True,
-                      crop_edge_length=512, n_consensus=10, device='cpu')
+                      crop_edge_length=512, n_consensus=10, device=_DEVICE)
     # Known aberration: Working distance in microns (um), stigx in arbitrary units (a.u.), stigy in a.u.
     known_aberration = ['-13.324 um', '0.466 (a.u.)', '0.219 (a.u.)']
     beam_parameter = ['working distance', 'stigmator x', 'stigmator y']
