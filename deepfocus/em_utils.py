@@ -1,11 +1,13 @@
-from typing import Tuple
+"""Abstract class for electron microscope interfaces."""
 from abc import ABCMeta, abstractmethod
+from typing import Tuple
 
 
 class EM(metaclass=ABCMeta):
     """
     EM base class for the acquisition of images and controlling machine parameters.
     """
+
     def __init__(self):
         pass
 

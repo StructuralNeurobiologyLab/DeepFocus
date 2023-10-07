@@ -1,3 +1,4 @@
+"""Implementation of the inference class for DeepFocus."""
 import logging
 import tempfile
 import time
@@ -8,8 +9,8 @@ import numpy as np
 import scipy.ndimage
 import torch
 
-from .em_utils import EM
 from .af_utils import AutoFocusBase, RandomCrop
+from .em_utils import EM
 
 
 class DeepFocus(AutoFocusBase):
@@ -66,7 +67,7 @@ class DeepFocus(AutoFocusBase):
         self.dt['init'] = time.time() - start
         # init here so the deterministic random seed is used for each DeepFocus
         # instance and not repeated within every "apply" call
-        self._rc = RandomCrop((2*self.n_perturbations, crop_edge_length, crop_edge_length),
+        self._rc = RandomCrop((2 * self.n_perturbations, crop_edge_length, crop_edge_length),
                               deterministic=self.deterministic_consensus, independent_xy=independent_xy)
 
     def __repr__(self):
@@ -137,7 +138,7 @@ class DeepFocus(AutoFocusBase):
                 preds = orig_preds[:, :3]
                 preds[:, 0] /= 1e6  # um -> m
                 self.pred_details.update(dict(mean_pred_res=(np.mean(preds, axis=0), np.std(preds, axis=0)),
-                                         scores=scores, consensus_res=pred_final, inp=inp.detach().cpu().numpy()))
+                                              scores=scores, consensus_res=pred_final, inp=inp.detach().cpu().numpy()))
                 sd_final = np.std(preds, axis=0)
         else:
             preds = preds.detach().cpu().numpy()
@@ -183,7 +184,7 @@ class DeepFocus(AutoFocusBase):
         self.images = np.array(images, dtype='f4')
         em.set_wd(wd)  # reset working distance
 
-    def run_on_em(self, em: EM, apply_result: bool = True, refresh_after_apply: bool = True)\
+    def run_on_em(self, em: EM, apply_result: bool = True, refresh_after_apply: bool = True) \
             -> Tuple[np.ndarray, np.ndarray]:
         """
 

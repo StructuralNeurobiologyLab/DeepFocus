@@ -1,7 +1,0 @@
-torch
-imageio~=2.9.0
-numpy
-scikit-image
-scipy
-setuptools~=52.0.0
-nelder_mead @ git+https://github.com/pschubert/nelder-mead.git

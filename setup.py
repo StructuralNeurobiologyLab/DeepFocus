@@ -6,8 +6,8 @@ setup(
     description='Deep learning based focus and astigmatism correction for electron microscopy.',
     url='',
     download_url='',
-    author='Philipp Schubert et al.',
-    author_email='philipp.schubert@bi.mpg.de',
+    author='Philipp Schubert',
+    author_email='phil.jo.schubert@gmail.com',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',

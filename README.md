@@ -4,15 +4,18 @@ Deep learning based focus and stigmation correction for electron microscopes.
 ## Installation
 To install the `deepfocus` package, run the following in an existing python environment:
 ```
-pip install -r requirements.txt
-pip install .
+git clone https://github.com/StructuralNeurobiologyLab/DeepFocus
+cd DeepFocus
+conda env create -f environment.yml -n deepfocus
+conda activate deepfocus
+pip install -e .
 ```
 
-## Example
+## Inference example
 After installing the dependencies and the package you can run `utils/infer.py` to apply the pretrained model file to the
 example data:
 ```
-python utils/infer.py
+python scripts/infer_examples.py
 ```
 which results in:
 ```
@@ -22,3 +25,16 @@ Predicted `stigmator y` correction -0.15 +- 0.04 (mean +- s.d.) for a known aber
 ```
 The pretrained model is the base model used in the publication with two 512x512 input patches (symmetric perturbation of
 5 um). The example data is part of the training/validation data.
+
+## Training example
+For trainings, we provide example scripts for the baseline model and the EfficientNet (`{_efficientnet}.py` suffix).
+To start a training run the following command:
+```
+python scripts/train_deepfocus.py
+```
+The default root directory for the training data is `data_root='~/DeepFocus/GT/'` and for the training results
+`save_root='~/DeepFocus/trainings/'`. Adjust them in the script(s) accordingly.
+
+## Team
+The DeepFocus project was developed at the Max Planck Institute for Biological Intelligence in Martinsried by Philipp
+Schubert under the supervision of Joergen Kornfeld.

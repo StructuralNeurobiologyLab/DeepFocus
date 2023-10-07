@@ -20,8 +20,8 @@ if __name__ == '__main__':
     beam_parameter = ['working distance', 'stigmator x', 'stigmator y']
     # Retrieve test data.
     images = np.array([
-        imageio.imread(os.path.join(data_dir, 'series_0_def-13324_astx-466_asty219_pert-5000.png')),
-        imageio.imread(os.path.join(data_dir, 'series_0_def-13324_astx-466_asty219_pert5000.png'))],
+        imageio.v3.imread(os.path.join(data_dir, 'series_0_def-13324_astx-466_asty219_pert-5000.png')),
+        imageio.v3.imread(os.path.join(data_dir, 'series_0_def-13324_astx-466_asty219_pert5000.png'))],
         dtype='f4'
     )
     # Apply DeepFocus.

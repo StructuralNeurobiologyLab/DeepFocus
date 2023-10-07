@@ -1,3 +1,4 @@
+"""Implementation of the inference class for DeepScore."""
 import tempfile
 import time
 from typing import Tuple, Optional
@@ -6,10 +7,10 @@ import imageio
 import numpy as np
 import scipy.ndimage
 import torch
-
-from .em_utils import EM
-from .af_utils import AutoFocusBase, RandomCrop
 from nelder_mead import nelder_mead
+
+from .af_utils import AutoFocusBase, RandomCrop
+from .em_utils import EM
 
 
 class DeepFocusScore(AutoFocusBase):

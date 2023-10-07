@@ -1,0 +1,24 @@
+name: deepfocus
+channels:
+  - pytorch
+  - nvidia
+  - defaults
+dependencies:
+  - imageio
+  - networkx=3.1
+  - numpy=1.24
+  - numpy-base=1.24
+  - pip=23.2
+  - python=3.8
+  - pytorch=2.0
+  - pytorch-cuda=11.8
+  - pip:
+      - pandas==2.0.3
+      - scikit-image==0.20.0
+      - scikit-learn==1.3.0
+      - scipy==1.9.1
+      - tensorboard==2.14.0
+      - tensorboardx==2.6.2.2
+      - torchvision==0.15.2
+      - git+https://github.com/ELEKTRONN/elektronn3.git@deepfocus#egg=elektronn3
+      - git+https://github.com/pschubert/nelder-mead.git

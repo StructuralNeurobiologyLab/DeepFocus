@@ -1,5 +1,6 @@
-from typing import Tuple, Optional, Sequence
+"""Autofocus utilities."""
 from abc import ABCMeta, abstractmethod
+from typing import Tuple, Optional, Sequence
 
 import numpy as np
 import skimage
@@ -57,6 +58,7 @@ class AutoFocusBase(metaclass=ABCMeta):
 class RandomMult:
     """
     """
+
     def __init__(self, fact: float, p: float = 0.5):
         """
         Inplace.
@@ -106,6 +108,7 @@ class RandomCrop:
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
     """
+
     def __init__(self, crop_shape: Sequence[int], deterministic: bool = True, independent_xy: bool = False):
         """
 
@@ -172,7 +175,8 @@ class RandomCrop:
                 slice(0, inp.shape[i]) for i in range(ndim_nonspatial)
             ]
             # use ndim_nonspatial shape plus z extent of input (inpt) and combine it with the target crop shape for xy.
-            inp_cropped = np.zeros(list(inp.shape[:(ndim_nonspatial+1)]) + list(self.crop_shape[-2:]), dtype=inp.dtype)
+            inp_cropped = np.zeros(list(inp.shape[:(ndim_nonspatial + 1)]) + list(self.crop_shape[-2:]),
+                                   dtype=inp.dtype)
             # iterate over z slices (inp shape: [C, Z, Y, X])
             #                                       ^
             for z_ix in range(inp.shape[-3]):
@@ -189,7 +193,7 @@ class RandomCrop:
                 spatial_slice = [  # Slice only the content within the coordinate bounds except z
                     slice(coords_lo[i], coords_hi[i]) for i in range(1, ndim_spatial)
                 ]
-                full_slice = tuple(nonspatial_slice + [slice(z_ix, z_ix+1)] + spatial_slice)
+                full_slice = tuple(nonspatial_slice + [slice(z_ix, z_ix + 1)] + spatial_slice)
                 # 'ndim_nonspatial' is the location of the z axis, e.g. ndim_nonspatial=1 for (C, Z, Y, X)
                 if ndim_nonspatial == 0:
                     inp_cropped[z_ix] = inp[full_slice]
@@ -238,6 +242,7 @@ class RandomRotate2d:
 
     If inputs are 3D images ([C,] D, H, W) Rotate them as a stack of 2D images
     by the same angle, constraining the rotation direction to the xy plane"""
+
     def __init__(self, angle_range=(-180, 180), prob=1):
         self.angle_range = angle_range
         self.prob = prob
