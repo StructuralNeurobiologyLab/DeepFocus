@@ -21,4 +21,4 @@ dependencies:
       - tensorboardx==2.6.2.2
       - torchvision==0.15.2
       - git+https://github.com/ELEKTRONN/elektronn3.git@deepfocus#egg=elektronn3
-      - git+https://github.com/pschubert/nelder-mead.git
+      - git+https://github.com/StructuralNeurobiologyLab/nelder-mead.git
