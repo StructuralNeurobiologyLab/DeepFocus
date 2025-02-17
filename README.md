@@ -1,5 +1,5 @@
 # DeepFocus
-Deep learning based focus and stigmation correction for electron microscopes.
+Deep learning based focus and stigmation correction for electron microscopes (https://doi.org/10.1038/s41467-024-45042-3).
 
 ## Installation
 To install the `deepfocus` package, run the following (requires `conda`):
@@ -42,15 +42,17 @@ Schubert under the supervision of Joergen Kornfeld. We would like to thank Rango
 ## How to cite DeepFocus
 
 ```
- @ARTICLE{DeepFocus,
-   title     = "DeepFocus: Fast focus and astigmatism correction for electron microscopy",
-   author    = "Philipp Johannes Schubert, Rangoli Saxena, Joergen Kornfeld",
-   abstract  = "High-throughput 2D and 3D scanning electron microscopy, which relies on automation and dependable control algorithms, requires high image quality with minimal human intervention. Classical focus and astigmatism correction algorithms attempt to explicitly model image formation and subsequently aberration correction. Such models often require parameter adjustments by experts when deployed to new microscopes, challenging samples, or imaging conditions to prevent unstable convergence, making them hard to use in practice or unreliable. Here, we introduce DeepFocus, a purely data-driven method for aberration correction in scanning electron microscopy. DeepFocus works under very low signal-to-noise ratio conditions, reduces processing times by more than an order of magnitude compared to the state-of-the-art method, rapidly converges within a large aberration range, and is easily recalibrated to different microscopes or challenging samples.",
-   journal   = "arXiv",
-   publisher = "",
-   year      = 2023,
-   month     = May,
-   day       = 8,
-   url       =  https://doi.org/10.48550/arXiv.2305.04977
- }
-
+@article{Schubert2024,
+  title = {DeepFocus: fast focus and astigmatism correction for electron microscopy},
+  volume = {15},
+  ISSN = {2041-1723},
+  url = {http://dx.doi.org/10.1038/s41467-024-45042-3},
+  DOI = {10.1038/s41467-024-45042-3},
+  number = {1},
+  journal = {Nature Communications},
+  publisher = {Springer Science and Business Media LLC},
+  author = {Schubert,  P. J. and Saxena,  R. and Kornfeld,  J.},
+  year = {2024},
+  month = jan 
+}
+```
